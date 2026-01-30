@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BNP Paribas - Ma Banque en Ligne</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00915A;
+            --secondary: #007A4D;
+            --accent: #B8D430;
+            --success: #00B894;
+            --danger: #FF6B6B;
+            --light: #F8F9FA;
+            --white: #FFFFFF;
+            --text: #2C3E50;
+            --text-light: #7F8C8D;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #00915A 0%, #007A4D 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: var(--white);
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 0.6s ease-out;
+            gap: 2rem;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 1rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-item {
+            padding: 0.7rem 1.5rem;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: var(--light);
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '◆';
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #F4D03F);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            grid-column: span 2;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(184, 212, 48, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .balance-card .card-title {
+            color: var(--white);
+            border-bottom-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .balance-amount {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            z-index: 1;
+        }
+
+        .balance-amount .currency {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-left: 0.5rem;
+        }
+
+        .balance-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn {
+            padding: 0.9rem 1.8rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #C9E265;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(184, 212, 48, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid var(--light);
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.8rem;
+            background: var(--light);
+            transition: all 0.3s ease;
+            animation: slideIn 0.4s ease-out;
+            position: relative;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .transaction-item:hover {
+            background: #E8E9EA;
+            transform: translateX(5px);
+        }
+
+        .transaction-item:hover .delete-transaction {
+            opacity: 1;
+        }
+
+        .delete-transaction {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--danger);
+            color: var(--white);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .delete-transaction:hover {
+            background: #FF5252;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .transaction-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 1;
+            padding-right: 2.5rem;
+        }
+
+        .transaction-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .transaction-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .transaction-date {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .transaction-amount {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .transaction-amount.positive {
+            color: var(--success);
+        }
+
+        .transaction-amount.negative {
+            color: var(--danger);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 41, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            animation: fadeInModal 0.3s ease-out;
+        }
+
+        @keyframes fadeInModal {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: scaleIn 0.3s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .close-modal {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--danger);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            background: #E8E9EA;
+            transform: translateY(-3px);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 0.3rem;
+        }
+
+        .success-message {
+            background: var(--success);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @media (max-width: 968px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .balance-card {
+                grid-column: span 1;
+            }
+
+            .balance-amount {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .account-settings {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .editable-field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 10px;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .field-value {
+            color: var(--text-light);
+        }
+
+        .edit-btn {
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn:hover {
+            background: var(--secondary);
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 0.7rem;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .name-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(184, 212, 48, 0.2);
+        }
+
+        .section-content {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Cartes bancaires */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .bank-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            color: var(--white);
+            min-height: 220px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s ease;
+            perspective: 1000px;
+        }
+
+        .bank-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .visa-card {
+            background: linear-gradient(135deg, #1434A4 0%, #0A1F5C 100%);
+            position: relative;
+        }
+
+        .visa-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(100, 149, 237, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .visa-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.03)"/></svg>');
+            background-size: 20px 20px;
+            opacity: 0.5;
+        }
+
+        .mastercard-card {
+            background: linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%);
+        }
+
+        .mastercard-card::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 200, 55, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .card-chip {
+            width: 50px;
+            height: 40px;
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-chip::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 35px;
+            height: 25px;
+            background: repeating-linear-gradient(
+                90deg,
+                rgba(0, 0, 0, 0.1) 0px,
+                rgba(0, 0, 0, 0.1) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+        }
+
+        .card-logo {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            opacity: 0.9;
+            z-index: 2;
+        }
+
+        .card-type {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .card-number {
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            margin-bottom: 1.5rem;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            z-index: 2;
+            font-weight: 500;
+        }
+
+        .card-holder, .card-expiry {
+            display: inline-block;
+            margin-right: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-label {
+            font-size: 0.65rem;
+            opacity: 0.8;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-holder div:last-child, .card-expiry div:last-child {
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .bnp-logo {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            opacity: 0.7;
+            z-index: 2;
+        }
+
+        .contactless {
+            position: absolute;
+            top: 2rem;
+            left: 6rem;
+            width: 25px;
+            height: 25px;
+            z-index: 2;
+        }
+
+        .contactless::before,
+        .contactless::after {
+            content: '';
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+        }
+
+        .contactless::before {
+            width: 15px;
+            height: 15px;
+            top: 5px;
+            left: 5px;
+            border-right: none;
+            border-bottom: none;
+            transform: rotate(45deg);
+        }
+
+        .contactless::after {
+            width: 20px;
+            height: 20px;
+            top: 2px;
+            left: 2px;
+            border-right: none;
+            border-bottom: none;
+            transform: rotate(45deg);
+        }
+
+        .card-actions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .card-action-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .card-action-item:hover {
+            background: #E8E9EA;
+            transform: translateX(5px);
+        }
+
+        .action-icon {
+            font-size: 1.8rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--white);
+            border-radius: 10px;
+        }
+
+        .action-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .action-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* Épargne */
+        .invest-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .savings-account {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem;
+            background: var(--light);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .savings-account:hover {
+            background: #E8E9EA;
+            transform: translateX(5px);
+        }
+
+        .savings-name {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .savings-rate {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .savings-balance {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .invest-result {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 12px;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Objectifs */
+        .goal-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .goal-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.7rem;
+        }
+
+        .goal-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .goal-progress-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Catégories de dépenses */
+        .expense-category {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .expense-category:last-child {
+            border-bottom: none;
+        }
+
+        .category-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .category-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .category-amount {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Filtres */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filters select {
+            padding: 0.7rem 1rem;
+            border: 2px solid var(--light);
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 968px) {
+            .main-grid, .invest-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-nav {
+                display: none;
+            }
+
+            .balance-card {
+                grid-column: span 1;
+            }
+
+            .balance-amount {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">BNP Paribas</div>
+            <nav class="main-nav">
+                <a href="#" class="nav-item active" onclick="event.preventDefault(); showSection('dashboard')">Tableau de bord</a>
+                <a href="#" class="nav-item" onclick="event.preventDefault(); showSection('cards')">Mes cartes</a>
+                <a href="#" class="nav-item" onclick="event.preventDefault(); showSection('invest')">Épargne</a>
+                <a href="#" class="nav-item" onclick="event.preventDefault(); showSection('history')">Historique</a>
+            </nav>
+            <div class="user-info">
+                <div class="user-name" id="userName">Jean Dupont</div>
+                <div class="user-avatar" id="userAvatar">JD</div>
+            </div>
+        </header>
+
+        <!-- Section Dashboard -->
+        <div id="dashboardSection" class="section-content">
+            <div class="main-grid">
+                <div class="card balance-card">
+                    <div class="card-title">Solde du compte</div>
+                    <div class="balance-amount">
+                        <span id="balance">5 420</span>
+                        <span class="currency">€</span>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-value" id="totalDeposits">0</div>
+                            <div class="stat-label">Dépôts</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="totalWithdrawals">0</div>
+                            <div class="stat-label">Retraits</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="totalTransfers">0</div>
+                            <div class="stat-label">Virements</div>
+                        </div>
+                    </div>
+                    <div class="balance-actions">
+                        <button class="btn btn-primary" onclick="openModal('deposit')">Déposer</button>
+                        <button class="btn btn-secondary" onclick="openModal('withdraw')">Retirer</button>
+                        <button class="btn btn-secondary" onclick="openModal('transfer')">Virement</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Graphique des dépenses</div>
+                    <canvas id="expensesChart" style="max-height: 250px;"></canvas>
+                    <div style="margin-top: 1.5rem;">
+                        <div class="expense-category">
+                            <div class="category-info">
+                                <span class="category-color" style="background: #FF6B6B;"></span>
+                                <span>Alimentation</span>
+                            </div>
+                            <span class="category-amount">450€</span>
+                        </div>
+                        <div class="expense-category">
+                            <div class="category-info">
+                                <span class="category-color" style="background: #4ECDC4;"></span>
+                                <span>Transport</span>
+                            </div>
+                            <span class="category-amount">280€</span>
+                        </div>
+                        <div class="expense-category">
+                            <div class="category-info">
+                                <span class="category-color" style="background: #FFE66D;"></span>
+                                <span>Loisirs</span>
+                            </div>
+                            <span class="category-amount">320€</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Objectifs d'épargne</div>
+                    <div class="goal-item">
+                        <div class="goal-info">
+                            <div class="goal-name">Vacances d'été</div>
+                            <div class="goal-progress-text">2 500€ / 4 000€</div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 62.5%;"></div>
+                        </div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-info">
+                            <div class="goal-name">Nouveau laptop</div>
+                            <div class="goal-progress-text">800€ / 1 500€</div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 53%;"></div>
+                        </div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-info">
+                            <div class="goal-name">Fonds d'urgence</div>
+                            <div class="goal-progress-text">3 200€ / 5 000€</div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 64%;"></div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('goal')" style="width: 100%; margin-top: 1rem;">Ajouter un objectif</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Paramètres du compte</div>
+                    <div class="account-settings">
+                        <div class="editable-field">
+                            <div style="flex: 1;">
+                                <div class="field-label">Nom complet</div>
+                                <input type="text" id="nameInput" class="name-input" value="Jean Dupont" style="display: none;">
+                                <div class="field-value" id="displayName">Jean Dupont</div>
+                            </div>
+                            <button class="edit-btn" id="editNameBtn" onclick="toggleNameEdit()">Modifier</button>
+                        </div>
+                        <div class="editable-field">
+                            <div>
+                                <div class="field-label">IBAN</div>
+                                <div class="field-value">FR76 3000 4000 0400 0123 4567 890</div>
+                            </div>
+                        </div>
+                        <div class="editable-field">
+                            <div>
+                                <div class="field-label">Type de compte</div>
+                                <div class="field-value">Compte Courant Esprit Libre</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Transactions récentes</div>
+                    <div id="transactionsList">
+                        <div class="transaction-item" data-id="trans-1">
+                            <div class="transaction-content">
+                                <div class="transaction-info">
+                                    <div class="transaction-name">Salaire mensuel</div>
+                                    <div class="transaction-date">28 janvier 2026</div>
+                                </div>
+                                <div class="transaction-amount positive">+2 500 €</div>
+                            </div>
+                            <button class="delete-transaction" onclick="deleteTransaction('trans-1')">×</button>
+                        </div>
+                        <div class="transaction-item" data-id="trans-2">
+                            <div class="transaction-content">
+                                <div class="transaction-info">
+                                    <div class="transaction-name">Loyer</div>
+                                    <div class="transaction-date">25 janvier 2026</div>
+                                </div>
+                                <div class="transaction-amount negative">-800 €</div>
+                            </div>
+                            <button class="delete-transaction" onclick="deleteTransaction('trans-2')">×</button>
+                        </div>
+                        <div class="transaction-item" data-id="trans-3">
+                            <div class="transaction-content">
+                                <div class="transaction-info">
+                                    <div class="transaction-name">Courses - Supermarché</div>
+                                    <div class="transaction-date">23 janvier 2026</div>
+                                </div>
+                                <div class="transaction-amount negative">-120 €</div>
+                            </div>
+                            <button class="delete-transaction" onclick="deleteTransaction('trans-3')">×</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Cartes -->
+        <div id="cardsSection" class="section-content" style="display: none;">
+            <div class="cards-grid">
+                <div class="bank-card visa-card">
+                    <div class="contactless"></div>
+                    <div class="card-chip"></div>
+                    <div class="card-logo">VISA</div>
+                    <div class="card-type">VISA PREMIER</div>
+                    <div class="card-number">4974 0123 4567 8901</div>
+                    <div class="card-holder">
+                        <div class="card-label">Titulaire</div>
+                        <div id="cardHolderName">JEAN DUPONT</div>
+                    </div>
+                    <div class="card-expiry">
+                        <div class="card-label">Expire fin</div>
+                        <div>12/28</div>
+                    </div>
+                    <div class="bnp-logo">BNP PARIBAS</div>
+                </div>
+
+                <div class="bank-card mastercard-card">
+                    <div class="contactless"></div>
+                    <div class="card-chip"></div>
+                    <div class="card-logo" style="color: #f79e1b;">●●</div>
+                    <div class="card-type">MASTERCARD GOLD</div>
+                    <div class="card-number">5412 7534 8901 2345</div>
+                    <div class="card-holder">
+                        <div class="card-label">Titulaire</div>
+                        <div id="cardHolderName2">JEAN DUPONT</div>
+                    </div>
+                    <div class="card-expiry">
+                        <div class="card-label">Expire fin</div>
+                        <div>06/27</div>
+                    </div>
+                    <div class="bnp-logo">BNP PARIBAS</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Gestion des cartes</div>
+                    <div class="card-actions-list">
+                        <div class="card-action-item" onclick="toggleCardBlock()">
+                            <div class="action-icon">🔒</div>
+                            <div>
+                                <div class="action-title">Bloquer temporairement</div>
+                                <div class="action-desc">Bloquez votre carte en cas de perte</div>
+                            </div>
+                        </div>
+                        <div class="card-action-item">
+                            <div class="action-icon">📊</div>
+                            <div>
+                                <div class="action-title">Voir les plafonds</div>
+                                <div class="action-desc">Paiement: 3000€ | Retrait: 1000€</div>
+                            </div>
+                        </div>
+                        <div class="card-action-item" onclick="openModal('cardLimit')">
+                            <div class="action-icon">⚙️</div>
+                            <div>
+                                <div class="action-title">Modifier les plafonds</div>
+                                <div class="action-desc">Ajustez vos limites de paiement</div>
+                            </div>
+                        </div>
+                        <div class="card-action-item">
+                            <div class="action-icon">🌍</div>
+                            <div>
+                                <div class="action-title">Paiements à l'étranger</div>
+                                <div class="action-desc">Activé</div>
+                            </div>
+                        </div>
+                        <div class="card-action-item">
+                            <div class="action-icon">📱</div>
+                            <div>
+                                <div class="action-title">Paiement sans contact</div>
+                                <div class="action-desc">Activé jusqu'à 50€</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Épargne -->
+        <div id="investSection" class="section-content" style="display: none;">
+            <div class="invest-grid">
+                <div class="card">
+                    <div class="card-title">Mes comptes d'épargne</div>
+                    <div class="savings-account">
+                        <div class="savings-info">
+                            <div class="savings-name">Livret A</div>
+                            <div class="savings-rate">Taux: 3.00%</div>
+                        </div>
+                        <div class="savings-balance">8 450,00 €</div>
+                    </div>
+                    <div class="savings-account">
+                        <div class="savings-info">
+                            <div class="savings-name">Livret Développement Durable</div>
+                            <div class="savings-rate">Taux: 3.00%</div>
+                        </div>
+                        <div class="savings-balance">5 200,00 €</div>
+                    </div>
+                    <div class="savings-account">
+                        <div class="savings-info">
+                            <div class="savings-name">PEL - Plan Épargne Logement</div>
+                            <div class="savings-rate">Taux: 2.25%</div>
+                        </div>
+                        <div class="savings-balance">12 300,00 €</div>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Ouvrir un nouveau livret</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Simulateur de placement</div>
+                    <div class="input-group">
+                        <label>Montant initial (€)</label>
+                        <input type="number" id="investAmount" value="1000" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Durée (années)</label>
+                        <input type="number" id="investDuration" value="5" min="1" max="30">
+                    </div>
+                    <div class="input-group">
+                        <label>Taux d'intérêt (%)</label>
+                        <input type="number" id="investRate" value="3" min="0" max="10" step="0.1">
+                    </div>
+                    <button class="btn btn-primary" onclick="calculateInvestment()" style="width: 100%;">Calculer</button>
+                    <div id="investResult" class="invest-result" style="display: none;">
+                        <div class="result-label">Montant final estimé</div>
+                        <div class="result-value" id="investResultValue">0 €</div>
+                    </div>
+                </div>
+
+                <div class="card" style="grid-column: span 2;">
+                    <div class="card-title">Performance de votre épargne</div>
+                    <canvas id="savingsChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Historique -->
+        <div id="historySection" class="section-content" style="display: none;">
+            <div class="card">
+                <div class="card-title">Historique complet des transactions</div>
+                <div class="filters">
+                    <select id="filterType" onchange="filterTransactions()">
+                        <option value="all">Tous les types</option>
+                        <option value="deposit">Dépôts</option>
+                        <option value="withdrawal">Retraits</option>
+                        <option value="transfer">Virements</option>
+                    </select>
+                    <select id="filterMonth" onchange="filterTransactions()">
+                        <option value="all">Tous les mois</option>
+                        <option value="01">Janvier 2026</option>
+                        <option value="12">Décembre 2025</option>
+                        <option value="11">Novembre 2025</option>
+                    </select>
+                    <button class="btn btn-secondary" onclick="exportTransactions()">📥 Exporter CSV</button>
+                </div>
+                <div id="fullTransactionsList">
+                    <!-- Les transactions seront ajoutées ici -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Dépôt -->
+    <div id="depositModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('deposit')">&times;</span>
+            <div class="modal-header">Effectuer un dépôt</div>
+            <div class="input-group">
+                <label>Montant (€)</label>
+                <input type="number" id="depositAmount" placeholder="Entrez le montant" min="0" step="0.01">
+            </div>
+            <div class="input-group">
+                <label>Description</label>
+                <input type="text" id="depositDescription" placeholder="Ex: Salaire, Remboursement...">
+            </div>
+            <button class="btn btn-primary" onclick="makeDeposit()" style="width: 100%;">Confirmer le dépôt</button>
+            <div class="success-message" id="depositSuccess">Dépôt effectué avec succès !</div>
+        </div>
+    </div>
+
+    <!-- Modal Retrait -->
+    <div id="withdrawModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('withdraw')">&times;</span>
+            <div class="modal-header">Effectuer un retrait</div>
+            <div class="input-group">
+                <label>Montant (€)</label>
+                <input type="number" id="withdrawAmount" placeholder="Entrez le montant" min="0" step="0.01">
+            </div>
+            <div class="input-group">
+                <label>Description</label>
+                <input type="text" id="withdrawDescription" placeholder="Ex: Retrait espèces, Achat...">
+            </div>
+            <button class="btn btn-primary" onclick="makeWithdrawal()" style="width: 100%;">Confirmer le retrait</button>
+            <div class="success-message" id="withdrawSuccess">Retrait effectué avec succès !</div>
+        </div>
+    </div>
+
+    <!-- Modal Virement -->
+    <div id="transferModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('transfer')">&times;</span>
+            <div class="modal-header">Effectuer un virement</div>
+            <div class="input-group">
+                <label>Bénéficiaire</label>
+                <input type="text" id="transferBeneficiary" placeholder="Nom du bénéficiaire">
+            </div>
+            <div class="input-group">
+                <label>Montant (€)</label>
+                <input type="number" id="transferAmount" placeholder="Entrez le montant" min="0" step="0.01">
+            </div>
+            <div class="input-group">
+                <label>Description</label>
+                <input type="text" id="transferDescription" placeholder="Ex: Remboursement, Cadeau...">
+            </div>
+            <button class="btn btn-primary" onclick="makeTransfer()" style="width: 100%;">Confirmer le virement</button>
+            <div class="success-message" id="transferSuccess">Virement effectué avec succès !</div>
+        </div>
+    </div>
+
+    <!-- Modal Objectif -->
+    <div id="goalModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('goal')">&times;</span>
+            <div class="modal-header">Ajouter un objectif d'épargne</div>
+            <div class="input-group">
+                <label>Nom de l'objectif</label>
+                <input type="text" id="goalName" placeholder="Ex: Voyage, Voiture...">
+            </div>
+            <div class="input-group">
+                <label>Montant cible (€)</label>
+                <input type="number" id="goalTarget" placeholder="Montant souhaité" min="0" step="100">
+            </div>
+            <button class="btn btn-primary" onclick="addGoal()" style="width: 100%;">Créer l'objectif</button>
+            <div class="success-message" id="goalSuccess">Objectif créé avec succès !</div>
+        </div>
+    </div>
+
+    <!-- Modal Plafond Carte -->
+    <div id="cardLimitModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('cardLimit')">&times;</span>
+            <div class="modal-header">Modifier les plafonds</div>
+            <div class="input-group">
+                <label>Plafond de paiement (€)</label>
+                <input type="number" id="paymentLimit" value="3000" min="100" step="100">
+            </div>
+            <div class="input-group">
+                <label>Plafond de retrait (€)</label>
+                <input type="number" id="withdrawLimit" value="1000" min="100" step="100">
+            </div>
+            <button class="btn btn-primary" onclick="updateLimits()" style="width: 100%;">Enregistrer</button>
+            <div class="success-message" id="limitSuccess">Plafonds mis à jour !</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let balance = 5420;
+        let transactions = [
+            { id: 'trans-1', name: 'Salaire mensuel', amount: 2500, date: '28 janvier 2026', type: 'deposit' },
+            { id: 'trans-2', name: 'Loyer', amount: -800, date: '25 janvier 2026', type: 'withdrawal' },
+            { id: 'trans-3', name: 'Courses - Supermarché', amount: -120, date: '23 janvier 2026', type: 'withdrawal' }
+        ];
+        let stats = {
+            deposits: 0,
+            withdrawals: 0,
+            transfers: 0
+        };
+
+        let expensesChart, savingsChart;
+
+        // Initialisation
+        window.onload = function() {
+            initCharts();
+            updateFullTransactionsList();
+        };
+
+        // Navigation entre sections
+        function showSection(section) {
+            // Cacher toutes les sections
+            const sections = ['dashboard', 'cards', 'invest', 'history'];
+            sections.forEach(s => {
+                const sectionEl = document.getElementById(s + 'Section');
+                if (sectionEl) {
+                    sectionEl.style.display = 'none';
+                }
+            });
+            
+            // Afficher la section demandée
+            const activeSection = document.getElementById(section + 'Section');
+            if (activeSection) {
+                activeSection.style.display = 'block';
+            }
+
+            // Mettre à jour les liens de navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                // Vérifier si le lien correspond à la section
+                const onclick = item.getAttribute('onclick');
+                if (onclick && onclick.includes("'" + section + "'")) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        // Initialiser les graphiques
+        function initCharts() {
+            // Graphique des dépenses
+            const expensesCtx = document.getElementById('expensesChart');
+            if (expensesCtx) {
+                expensesChart = new Chart(expensesCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Alimentation', 'Transport', 'Loisirs', 'Logement', 'Autres'],
+                        datasets: [{
+                            data: [450, 280, 320, 800, 150],
+                            backgroundColor: ['#FF6B6B', '#4ECDC4', '#FFE66D', '#A8E6CF', '#C7CEEA']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Graphique de l'épargne
+            const savingsCtx = document.getElementById('savingsChart');
+            if (savingsCtx) {
+                savingsChart = new Chart(savingsCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+                        datasets: [{
+                            label: 'Épargne totale',
+                            data: [20000, 21500, 23000, 24200, 25500, 25950],
+                            borderColor: '#00915A',
+                            backgroundColor: 'rgba(0, 145, 90, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: true
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function openModal(type) {
+            document.getElementById(type + 'Modal').classList.add('active');
+        }
+
+        function closeModal(type) {
+            document.getElementById(type + 'Modal').classList.remove('active');
+            // Reset form
+            if (type === 'deposit') {
+                document.getElementById('depositAmount').value = '';
+                document.getElementById('depositDescription').value = '';
+                document.getElementById('depositSuccess').classList.remove('show');
+            } else if (type === 'withdraw') {
+                document.getElementById('withdrawAmount').value = '';
+                document.getElementById('withdrawDescription').value = '';
+                document.getElementById('withdrawSuccess').classList.remove('show');
+            } else if (type === 'transfer') {
+                document.getElementById('transferBeneficiary').value = '';
+                document.getElementById('transferAmount').value = '';
+                document.getElementById('transferDescription').value = '';
+                document.getElementById('transferSuccess').classList.remove('show');
+            } else if (type === 'goal') {
+                document.getElementById('goalName').value = '';
+                document.getElementById('goalTarget').value = '';
+                document.getElementById('goalSuccess').classList.remove('show');
+            } else if (type === 'cardLimit') {
+                document.getElementById('limitSuccess').classList.remove('show');
+            }
+        }
+
+        function updateBalance() {
+            document.getElementById('balance').textContent = balance.toLocaleString('fr-FR');
+        }
+
+        function updateStats() {
+            document.getElementById('totalDeposits').textContent = stats.deposits;
+            document.getElementById('totalWithdrawals').textContent = stats.withdrawals;
+            document.getElementById('totalTransfers').textContent = stats.transfers;
+        }
+
+        function addTransaction(name, amount, type) {
+            const date = new Date().toLocaleDateString('fr-FR', { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric' 
+            });
+
+            const transactionId = 'trans-' + Date.now();
+
+            const transaction = {
+                id: transactionId,
+                name: name,
+                amount: amount,
+                date: date,
+                type: type
+            };
+
+            transactions.unshift(transaction);
+
+            const transactionsList = document.getElementById('transactionsList');
+            const transactionDiv = document.createElement('div');
+            transactionDiv.className = 'transaction-item';
+            transactionDiv.setAttribute('data-id', transactionId);
+            transactionDiv.innerHTML = `
+                <div class="transaction-content">
+                    <div class="transaction-info">
+                        <div class="transaction-name">${name}</div>
+                        <div class="transaction-date">${date}</div>
+                    </div>
+                    <div class="transaction-amount ${amount > 0 ? 'positive' : 'negative'}">
+                        ${amount > 0 ? '+' : ''}${amount.toLocaleString('fr-FR')} €
+                    </div>
+                </div>
+                <button class="delete-transaction" onclick="deleteTransaction('${transactionId}')">×</button>
+            `;
+
+            transactionsList.insertBefore(transactionDiv, transactionsList.firstChild);
+            updateFullTransactionsList();
+        }
+
+        function makeDeposit() {
+            const amount = parseFloat(document.getElementById('depositAmount').value);
+            const description = document.getElementById('depositDescription').value || 'Dépôt';
+
+            if (isNaN(amount) || amount <= 0) {
+                alert('Veuillez entrer un montant valide');
+                return;
+            }
+
+            balance += amount;
+            stats.deposits++;
+            updateBalance();
+            updateStats();
+            addTransaction(description, amount, 'deposit');
+
+            document.getElementById('depositSuccess').classList.add('show');
+            setTimeout(() => {
+                closeModal('deposit');
+            }, 1500);
+        }
+
+        function makeWithdrawal() {
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const description = document.getElementById('withdrawDescription').value || 'Retrait';
+
+            if (isNaN(amount) || amount <= 0) {
+                alert('Veuillez entrer un montant valide');
+                return;
+            }
+
+            if (amount > balance) {
+                alert('Solde insuffisant');
+                return;
+            }
+
+            balance -= amount;
+            stats.withdrawals++;
+            updateBalance();
+            updateStats();
+            addTransaction(description, -amount, 'withdrawal');
+
+            document.getElementById('withdrawSuccess').classList.add('show');
+            setTimeout(() => {
+                closeModal('withdraw');
+            }, 1500);
+        }
+
+        function makeTransfer() {
+            const beneficiary = document.getElementById('transferBeneficiary').value;
+            const amount = parseFloat(document.getElementById('transferAmount').value);
+            const description = document.getElementById('transferDescription').value || 'Virement';
+
+            if (!beneficiary) {
+                alert('Veuillez entrer le nom du bénéficiaire');
+                return;
+            }
+
+            if (isNaN(amount) || amount <= 0) {
+                alert('Veuillez entrer un montant valide');
+                return;
+            }
+
+            if (amount > balance) {
+                alert('Solde insuffisant');
+                return;
+            }
+
+            balance -= amount;
+            stats.transfers++;
+            updateBalance();
+            updateStats();
+            addTransaction(`Virement à ${beneficiary} - ${description}`, -amount, 'transfer');
+
+            document.getElementById('transferSuccess').classList.add('show');
+            setTimeout(() => {
+                closeModal('transfer');
+            }, 1500);
+        }
+
+        function toggleNameEdit() {
+            const nameInput = document.getElementById('nameInput');
+            const displayName = document.getElementById('displayName');
+            const editBtn = document.getElementById('editNameBtn');
+
+            if (nameInput.style.display === 'none') {
+                // Mode édition
+                nameInput.style.display = 'block';
+                displayName.style.display = 'none';
+                nameInput.value = displayName.textContent;
+                nameInput.focus();
+                editBtn.textContent = 'Enregistrer';
+                editBtn.style.background = 'var(--accent)';
+                editBtn.style.color = 'var(--primary)';
+            } else {
+                // Sauvegarder
+                const newName = nameInput.value.trim();
+                if (newName !== '') {
+                    displayName.textContent = newName;
+                    document.getElementById('userName').textContent = newName;
+                    
+                    // Update avatar with initials
+                    const initials = newName.split(' ').map(word => word[0]).join('').toUpperCase().substring(0, 2);
+                    document.getElementById('userAvatar').textContent = initials;
+                    
+                    // Update card holders
+                    document.getElementById('cardHolderName').textContent = newName.toUpperCase();
+                    document.getElementById('cardHolderName2').textContent = newName.toUpperCase();
+                }
+                
+                nameInput.style.display = 'none';
+                displayName.style.display = 'block';
+                editBtn.textContent = 'Modifier';
+                editBtn.style.background = 'var(--primary)';
+                editBtn.style.color = 'var(--white)';
+            }
+        }
+
+        // Supprimer une transaction
+        function deleteTransaction(transactionId) {
+            const transactionElement = document.querySelector(`[data-id="${transactionId}"]`);
+            if (!transactionElement) return;
+
+            // Trouver la transaction dans le tableau
+            const transaction = transactions.find(t => t.id === transactionId);
+            
+            if (transaction) {
+                // Annuler l'effet sur le solde
+                balance -= transaction.amount;
+                
+                // Mettre à jour les statistiques
+                if (transaction.type === 'deposit') {
+                    stats.deposits--;
+                } else if (transaction.type === 'withdrawal') {
+                    stats.withdrawals--;
+                } else if (transaction.type === 'transfer') {
+                    stats.transfers--;
+                }
+                
+                updateBalance();
+                updateStats();
+                
+                // Retirer du tableau
+                transactions = transactions.filter(t => t.id !== transactionId);
+            }
+
+            // Animation de suppression
+            transactionElement.style.animation = 'slideOut 0.3s ease-out';
+            setTimeout(() => {
+                transactionElement.remove();
+                updateFullTransactionsList();
+            }, 300);
+        }
+
+        // Ajouter l'animation de sortie
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideOut {
+                from {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(-100%);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Calculateur d'investissement
+        function calculateInvestment() {
+            const amount = parseFloat(document.getElementById('investAmount').value);
+            const duration = parseInt(document.getElementById('investDuration').value);
+            const rate = parseFloat(document.getElementById('investRate').value) / 100;
+
+            if (isNaN(amount) || isNaN(duration) || isNaN(rate)) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+
+            const finalAmount = amount * Math.pow(1 + rate, duration);
+            
+            document.getElementById('investResult').style.display = 'block';
+            document.getElementById('investResultValue').textContent = finalAmount.toLocaleString('fr-FR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }) + ' €';
+        }
+
+        // Ajouter un objectif
+        function addGoal() {
+            const name = document.getElementById('goalName').value;
+            const target = parseFloat(document.getElementById('goalTarget').value);
+
+            if (!name || isNaN(target) || target <= 0) {
+                alert('Veuillez remplir tous les champs correctement');
+                return;
+            }
+
+            document.getElementById('goalSuccess').classList.add('show');
+            setTimeout(() => {
+                closeModal('goal');
+            }, 1500);
+        }
+
+        // Mettre à jour les plafonds
+        function updateLimits() {
+            document.getElementById('limitSuccess').classList.add('show');
+            setTimeout(() => {
+                closeModal('cardLimit');
+            }, 1500);
+        }
+
+        // Bloquer/débloquer la carte
+        let cardBlocked = false;
+        function toggleCardBlock() {
+            cardBlocked = !cardBlocked;
+            if (cardBlocked) {
+                alert('Carte bloquée temporairement');
+            } else {
+                alert('Carte débloquée');
+            }
+        }
+
+        // Filtrer les transactions
+        function updateFullTransactionsList() {
+            const fullList = document.getElementById('fullTransactionsList');
+            if (!fullList) return;
+
+            fullList.innerHTML = '';
+            transactions.forEach(transaction => {
+                const div = document.createElement('div');
+                div.className = 'transaction-item';
+                div.setAttribute('data-id', transaction.id);
+                div.innerHTML = `
+                    <div class="transaction-content">
+                        <div class="transaction-info">
+                            <div class="transaction-name">${transaction.name}</div>
+                            <div class="transaction-date">${transaction.date}</div>
+                        </div>
+                        <div class="transaction-amount ${transaction.amount > 0 ? 'positive' : 'negative'}">
+                            ${transaction.amount > 0 ? '+' : ''}${transaction.amount.toLocaleString('fr-FR')} €
+                        </div>
+                    </div>
+                    <button class="delete-transaction" onclick="deleteTransaction('${transaction.id}')">×</button>
+                `;
+                fullList.appendChild(div);
+            });
+        }
+
+        function filterTransactions() {
+            const type = document.getElementById('filterType').value;
+            const month = document.getElementById('filterMonth').value;
+            
+            // Simple filter implementation
+            updateFullTransactionsList();
+        }
+
+        function exportTransactions() {
+            let csv = 'Date,Description,Montant,Type\n';
+            transactions.forEach(t => {
+                csv += `${t.date},"${t.name}",${t.amount},${t.type}\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'transactions.csv';
+            a.click();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                const modals = ['deposit', 'withdraw', 'transfer'];
+                modals.forEach(modal => {
+                    if (event.target.id === modal + 'Modal') {
+                        closeModal(modal);
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
